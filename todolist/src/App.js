@@ -44,6 +44,7 @@ function App() {
 
   return (
     <div className='App'>
+      <h2>Todo list</h2>
       <Stack direction="row" spacing={2} justifyContent="center" alignItems="center">
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <DesktopDatePicker
@@ -72,7 +73,7 @@ function App() {
         className="ag-theme-material"
         style={{
           height: '500px',
-          width: 'auto',
+          width: '50%',
           margin: 'auto'}}
         >
           <AgGridReact
