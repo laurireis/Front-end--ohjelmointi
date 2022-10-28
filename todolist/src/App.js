@@ -10,10 +10,13 @@ import Stack from '@mui/material/Stack';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import Tabs from'@mui/material/Tabs';
+import Tab from'@mui/material/Tab';
 
 function App() {
   const [todo, setTodo] = useState({desc: '', date: '', priority: ''});
   const [todos, setTodos] = useState([]);
+  const [value, setValue] = useState('one');
   const gridRef = useRef();
 
   const addTodo = (event) => {
@@ -35,6 +38,10 @@ function App() {
     
   }
 
+  const handleChange = (event, value) => {
+    setValue(value);
+  }
+
   const columns = [
     {headerName: 'Date', field: 'date', sortable: true, filter: true, floatingFilter: true},
     {headerName: 'Description', field: 'desc', sortable: true, filter: true, floatingFilter: true},
@@ -45,6 +52,12 @@ function App() {
   return (
     <div className='App'>
       <h2>Todo list</h2>
+      <Tabs value={value} onChange={handleChange}>
+        <Tab value="one" label="Home" />
+        <Tab value="two" label="Todos" />
+      </Tabs>
+      {value === 'one' && <div>Welcome!</div>}
+      {value === 'two' && <div>
       <Stack direction="row" spacing={2} justifyContent="center" alignItems="center">
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <DesktopDatePicker
@@ -86,6 +99,7 @@ function App() {
           >
           </AgGridReact>
       </div>
+      </div>}
     </div>
   );
 }
