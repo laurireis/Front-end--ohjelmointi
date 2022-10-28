@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Repositories</title>
+  </head>
+  <body>
+    <!-- Root container for react components -->
+    <div id='root'></div>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    
+    <script type="text/babel">
+        const Repo = () => {
+            const [listItems, setListItems] = React.useState([]);
+            const [repo, setRepo] = React.useState('');
+
+            const Repos = () => {
+                fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(repo)}`)
+                .then(response => response.json())
+                .then(data => {
+                    setListItems(data.items)
+                })
+                .catch(err => console.error(err))
+            }
+
+            const itemRows = listItems.map((repo) =>
+                <tr key={repo.id}>
+                    <td>{repo.full_name}</td>
+                    <td><a href={repo.html_url}>{repo.html_url}</a></td>
+                </tr>
+            )
+
+            return (
+                <div>
+                    <h1>Repositories</h1>
+                    <input value={repo} onChange={e => setRepo(e.target.value)} />
+                    <button onClick={Repos}>Search</button>
+                    <table>
+                        <tbody>
+                            <tr><th>Name</th><th>URL</th></tr>
+                            {itemRows}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<Repo />, document.getElementById('root'));
+    </script>
+  </body>
+</html>

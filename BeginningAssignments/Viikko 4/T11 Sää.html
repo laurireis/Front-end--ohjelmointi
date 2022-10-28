@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Sää</title>
+  </head>
+  <body>
+    <!-- Root container for react components -->
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+        function App() {
+            const [weather, setWeather] = React.useState('')
+            const [main, setMain] = React.useState('')
+            const [icon, setIcon] = React.useState('')
+            const [visible, setVisible] = React.useState(false)
+            const [city, setCity] = React.useState('')
+            
+            function fetchWeather() {
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}%20&APPID=33a9e7b6bd678078a645cfd195d19f25`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    setWeather(data.weather[0])
+                    setMain(data.main)
+                    setIcon(data.icon)
+                })
+            }
+
+            function showWeather() {
+                setVisible(true)
+            }
+
+            return (
+                <div>
+                    <label for="city">
+                        <input value={city} onChange={e => setCity(e.target.value)} />
+                        <button onClick={() => {fetchWeather(); showWeather();}}>Get weather</button>
+                    </label>
+
+                    {visible && <h2>{city} weather</h2>}
+                    {visible && <p>Temperature: {(main.temp - 273.15).toFixed(1)} Celsius</p>}
+                    {visible && <p>Weather: {weather.main}</p>}
+                    {visible && <img src={"http://openweathermap.org/img/wn/" + weather.icon + "@2x.png"} width="50" height="50"/>}
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
