@@ -126,8 +126,8 @@ export default function Carlist() {
             <div
                 className='ag-theme-material'
                 style={{
-                    height: '800px',
-                    width: '100%',
+                    height: '700px',
+                    width: '90%',
                     margin: 'auto'}}
             >
                 <AgGridReact
