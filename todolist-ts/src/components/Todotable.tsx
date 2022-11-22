@@ -1,30 +1,24 @@
-import React from "react"
+import { Todo } from '../Interfaces';
 
-interface Props {
-    todos: any[]
+interface IProps {
+    todos: Array<Todo>,
+    deleteTodo: (row: number) => void;
 }
 
-export const Todotable: React.FC<Props> = ({todos}) => {
+export default function Todotable(props: IProps) {
     return (
         <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>Description</td>
-                        <td>Date</td>
-                        <td>Priority</td>
-                    </tr>
-                    {todos.map((todo, index) =>
-                        <>
-                            <tr key={index}>
-                                <td>{todo.desc}</td>
-                                <td>{todo.date}</td>
-                                <td>{todo.priority}</td>
-                            </tr>
-                        </>
-                    )} 
-                </tbody>
-            </table>
+            <table id='todotable'><tbody>
+                {
+                    props.todos.map((todo, index) =>
+                        <tr key={index}>
+                            <td>{todo.desc}</td>
+                            <td>{todo.date}</td>
+                            <td>{todo.priority}</td>
+                            <td><button onClick={() => props.deleteTodo(index)}>Delete</button></td>
+                        </tr>)
+                }
+            </tbody></table>
         </div>
     )
 }
