@@ -16,31 +16,23 @@
         function CheckAge() {
             const [name, setName] = React.useState('');
             const [age, setAge] = React.useState('');
-
-            const nameChanged = (event) => {
-                setName(event.target.value);
-            };
-
-            const ageChanged = (event) => {
-                setAge(event.target.value);
-            };
+            const [message, setMessage] = React.useState('');
 
             const formSubmitted = (event) => {
                 event.preventDefault();
                 if (age >= 18) {
-                    // en saa tekstiä tulostettua sivulle :(
-                    <div>Hello {name}</div>;
+                    setMessage('Hello ' + name);
                 } else {
-                    <div>You are too young</div>
-
+                    setMessage('You are too young');
                 }
             };
             
             return (
                 <div>
+                    <p>{message}</p>
                     <form onSubmit={formSubmitted}>   
-                        <p>Name: </p><input type="text" value={name} onChange={nameChanged} /><br />
-                        <p>Age: </p><input type="text" value={age} onChange={ageChanged} /><br />
+                        <p>Name: </p><input type="text" value={name} onChange={e => setName(e.target.value)} /><br />
+                        <p>Age: </p><input type="text" value={age} onChange={e => setAge(e.target.value)} /><br />
                         <input type="submit" value="Submit" />
                     </form> 
                 </div>
